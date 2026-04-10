@@ -154,3 +154,10 @@ class paymentcompany(models.Model):
     commission = models.FloatField()
     paymentdate = models.DateTimeField(auto_now_add=True)
     paymentmode = models.CharField(max_length=100)    
+
+    def __str__(self):
+        return self.freelancername.name + " - " + self.projectname.title   
+
+
+
+                             
