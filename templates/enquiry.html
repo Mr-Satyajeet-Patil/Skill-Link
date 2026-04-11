@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Enquriy{% endblock %}
+
+{% block content %}
+
+
+<section class="bg-dark text-white text-center py-5">
+    <div class="container">
+    <h1>Enquiry</h1>
+    <p>fill the below information to solve the enquiry</p>
+</div>
+</section>
+
+<section class="container py-5">
+    <div class="row align-items-center">
+
+          <div class="col-md-6">
+            <img src="{% static 'images/contact.jpg' %}"
+                 class="img-fluid rounded shadow">
+        </div>
+
+ <div class="col-md-6">
+
+    <form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="name" class="form-control mb-3"
+           placeholder="Enter your name" required>
+
+    <input type="email" name="email" class="form-control mb-3"
+           placeholder="Enter email" required>
+
+    <input type="text" name="mobile" class="form-control mb-3"
+           placeholder="Enter phone number" required>
+
+    <textarea name="message" class="form-control mb-3"
+              placeholder="Write your message" rows="4" required></textarea>
+
+    <button type="submit" class="btn btn-warning w-100">Submit</button>
+</form>
+</div>
+</div>
+</section>
+{% endblock %}
