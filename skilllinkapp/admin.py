@@ -19,4 +19,5 @@ admin.site.register(allotment)
 
 
 
+
 # Register your models here.

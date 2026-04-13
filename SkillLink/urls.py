@@ -23,5 +23,10 @@ from skilllinkapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.base, name='base'),
-    
+    path('companysignup/', views.companysignup, name='companysignup'),
+    path('companylogin/', views.companyloginview, name='companylogin'),
+    path('companydashboard/', views.companydashboard, name='companydashboard'),
+    path('freelancerlogin/', views.freelancerlogin, name='freelancerlogin'),
+    path('freelancersignup/', views.freelancersignup, name='freelancersignup'),
+    path('joinnow/', views.joinnow, name='joinnow'),
 ]
