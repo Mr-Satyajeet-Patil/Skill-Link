@@ -43,7 +43,7 @@ class project(models.Model):
     description = models.CharField(max_length=200)
     requiredskills = models.CharField(max_length=200)
     budget = models.FloatField()
-    duration = models.CharField(max_length=100)
+    duration = models.TextField()
     postedat= models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

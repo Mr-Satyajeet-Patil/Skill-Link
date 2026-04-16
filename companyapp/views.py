@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.shortcuts import redirect
+
 from skilllinkapp.models import company
+
+from django.shortcuts import render, redirect
+from skilllinkapp.models import project
 
 
 
@@ -95,3 +98,33 @@ def manage_profile(request):
         form = CompanyProfileForm(instance=comp)
 
     return render(request, 'companyapp/managecompany.html', {'form': form})
+
+
+
+
+def postproject(request):
+
+    # 🚨 login check
+    if 'company_id' not in request.session:
+        return redirect('companylogin')
+
+    company_id = request.session.get('company_id')
+    company_obj = company.objects.get(id=company_id)
+
+    projects = project.objects.filter(companyname=company_obj)
+
+    if request.method == 'POST':
+        project.objects.create(
+            companyname=company_obj,
+            title=request.POST.get('title'),
+            description=request.POST.get('description'),
+            requiredskills=request.POST.get('requiredskills'),
+            budget=request.POST.get('budget'),
+            duration=request.POST.get('duration')
+        )
+
+        return redirect('postproject')
+
+    return render(request, 'company/postproject.html', {'projects': projects})
+
+
