@@ -2,7 +2,7 @@ from django.db import models
 
 class company(models.Model):
     companyname = models.CharField(max_length=100)
-    email= models.EmailField()
+    email= models.EmailField(unique=True)
     password = models.CharField(max_length=100)
     industrytype= models.CharField(max_length=100)
     contact = models.CharField(max_length=20)
@@ -17,10 +17,9 @@ class freelancer(models.Model):
     password = models.CharField(max_length=100)
     skills= models.CharField(max_length=200)
     contact = models.CharField(max_length=20)
-    location = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
-    rating = models.FloatField()
-    count= models.IntegerField()
+    rating = models.FloatField(default=0.0)
+    count= models.IntegerField(default=0)
     education = models.CharField(max_length=200)
     
     

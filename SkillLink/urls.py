@@ -20,10 +20,16 @@ from skilllinkapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.base, name='base'),
+<<<<<<< HEAD
      path('', views.home, name='home'),
      path('about/', views.about, name='about'),
     path('enquiry/', views.enquiry, name='enquiry'),
      
+=======
+    path('joinnow/', views.joinnow, name='joinnow'),
+    path('company/', include('companyapp.urls')),
+    path('freelancer/', include('freelancerapp.urls')),
+>>>>>>> origin/feature-satyajeet
 ]
 
 

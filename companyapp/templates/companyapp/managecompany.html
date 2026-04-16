@@ -1,0 +1,20 @@
+{% extends "companyapp/companypanel.html" %}
+
+{% block contentcompany %}
+<br><br><br><br>
+<div style="max-width:50%;margin:auto;padding:20px;background:#0f172a;color:white;border-radius:10px;">
+    
+    <h2 style="text-align:center;">Manage Company Profile</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+
+        <button type="submit" style="width:100%;padding:10px;background:#3b82f6;border:none;border-radius:5px;">
+            Update Profile
+        </button>
+    </form>
+
+</div>
+{% endblock %}

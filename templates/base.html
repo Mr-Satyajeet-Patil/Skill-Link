@@ -23,16 +23,107 @@
 
         .nav-link-custom:hover{
             color: corals !important;
-        }       
+        }    
+        
+        .footer-premium {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #fff;
+}
+
+.footer-title {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.footer-link {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    margin-bottom: 6px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.footer-link:hover {
+    color: #fff;
+    transform: translateX(3px);
+}
+
+.social-icon {
+    width: 35px;
+    height: 35px;
+    background: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.social-icon:hover {
+    background: #3b82f6;
+    transform: scale(1.1);
+}
+
+.btn-gradient {
+    background: linear-gradient(90deg, #3b82f6, #6366f1);
+    border: none;
+    color: white;
+}
+
+.btn-gradient:hover {
+    opacity: 0.9;
+}
+
+.footer-divider {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+#css
+
+/* Navbar Background */
+.custom-navbar {
+    background: #0b0b0b; /* deep black */
+    padding: 8px 0;
+}
+
+/* Logo */
+.logo {
+    height: 42px;
+    width: auto;
+    margin-right: 8px;
+}
+
+/* Brand Text */
+.brand-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+/* Accent Color */
+.accent {
+    color: #00d4ff; /* neon blue */
+}
+
     </style>
 </head>
 <body>
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
 
     <!-- Logo -->
-     
-    <a class="navbar-brand" href="{% url 'home' %}">Skill-Link</a>
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'base' %}">
+      <img src="{% static 'images/logofinal.png' %}" class="logo">
+      <span class="brand-text">Skill<span class="accent">-Link</span></span>
+    </a>
+
+    <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      ☰
+    </button>
 
     <!-- Toggle button (important for small screens) -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -63,8 +154,14 @@
 
       <!-- Right side -->
       <div>
-        <a href="" class="btn btn-outline-light me-2">Company</a>
-        <a href="" class="btn btn-warning">Freelancer</a>
+        <a href="{% url 'companyapp:companylogin' %}" class="nav-link-custom {% if request.path == '/companylogin/' %}nav-link-active{% endif %}">
+                <i class="fas fa-user-plus"></i>
+                Company Login
+            </a>
+            <a href="{% url 'freelancerapp:freelancerlogin' %}" class="nav-link-custom {% if request.path == '/freelancerlogin/' %}nav-link-active{% endif %}">   
+                <i class="fas fa-user-plus"></i>
+                Freelancer Login
+            </a> 
       </div>
 
     </div>
@@ -144,27 +241,79 @@
 
                 {% endblock %}
             </div>
+            <br><br><br>
 
 
         <!-- Footer -->
-        <footer class="bg-dark text-white text-center p-3 mt-4">
-            <table style="width: 100%;">
-                <tr>
-                    <td style="text-align: left;">
-                        <a href="{% url 'about' %}" class="nav-link-custom">About Us</a>
-                        <a href="{% url 'enquiry'%}" class="nav-link-custom">Contact</a>
-                        <a href="" class="nav-link-custom">Privacy Policy</a>
-                    </td>
-                    <td style="text-align: right;">
-                        <a href="#" class="nav-link-custom"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="nav-link-custom"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="nav-link-custom"><i class="fab fa-linkedin"></i></a>
-                    </td>
-                </tr>
+        <footer class="footer-premium mt-auto">
+    <div class="container py-5">
+        <div class="row g-4">
 
-            &copy; 2026 Skill-Link <i class="fas fa-chain mb-1 text-primary"></i>. All rights reserved.
-        </footer>
+            <!-- Brand Section -->
+            <div class="col-lg-4" >
+                <h4 class="fw-bold text-white mb-3">SkillLink</h4>
+                <p  class="text-white small" >
+                    Connecting companies, entrepreneurs, and freelancers with zero commission.
+                    Build, collaborate, and grow faster with trusted professionals.
+                </p>
 
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-6 col-lg-2">
+                <h6 class="footer-title">Quick Links</h6>
+                <a href="#" class="footer-link">Home</a>
+                <a href="#" class="footer-link">About Us</a>
+                <a href="#" class="footer-link">Freelancer Signup</a>
+                <a href="#" class="footer-link">Add Project</a>
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">Site Map</a>
+            </div>
+
+            <!-- FAQ -->
+            <div class="col-6 col-lg-2">
+                <h6 class="footer-title">FAQ</h6>
+                <a href="#" class="footer-link">How it Works</a>
+                <a href="#" class="footer-link">Company Signup</a>
+                <a href="#" class="footer-link">Find Work</a>
+                <a href="#" class="footer-link">Hire Talent</a>
+                
+            </div>
+
+            <!-- Support -->
+            <div class="col-6 col-lg-2">
+                
+            </div>
+
+            <!-- CTA Section -->
+            <div class="col-lg-2">
+                <h6 class="footer-title">Get Started</h6>
+                <a href="{% url 'joinnow' %}" class="btn btn-gradient w-100 mb-2">Join Now</a>
+                <a href="#" class="btn btn-outline-light w-100">Post a Job</a>
+            </div>
+
+        </div>
+
+        <!-- Divider -->
+        <hr class="footer-divider my-4">
+
+        <!-- Bottom Bar -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-muted">
+            <div style="color: #94a3b8;">
+                © 2026 SkillLink. All rights reserved.
+            </div>
+            <div style="color: white">
+                Made with ❤️ by Your Team
+            </div>
+        </div>
+    </div>
+</footer>
     </body>
 </html>
 

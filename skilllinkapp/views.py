@@ -4,6 +4,13 @@ from django.contrib import messages
 from .models import enquiry as Enquiry
 
 
+from urllib import request
+from django.contrib.auth import authenticate, login
+
+from django.shortcuts import render,redirect
+from .models import company
+from .models import freelancer
+from django.contrib.auth.hashers import make_password
 
 def base(request):
     return render(request, 'base.html')
@@ -41,3 +48,6 @@ def enquiry(request):
 
     return render(request, 'enquiry.html')
 
+
+def joinnow(request):
+    return render(request, 'joinnow.html')
