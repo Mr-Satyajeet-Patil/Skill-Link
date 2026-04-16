@@ -1,7 +1,4 @@
 {% extends 'base.html' %}
-
-{% block title %}Freelancer Login{% endblock %}
-
 {% block content %}
 
 <div class="container mt-5">
@@ -10,7 +7,7 @@
         <div class="col-md-5">
             <div class="card shadow-lg p-4">
 
-                <h3 class="text-center mb-4">Freelancer Login</h3>
+                <h3 class="text-center mb-4">Company Login</h3>
 
                 <!-- Error Message -->
                 {% if messages %}
@@ -43,7 +40,7 @@
                 <!-- Extra Links -->
                 <div class="text-center mt-3">
                     <p>Don't have an account? 
-                        <a href="{% url 'freelancersignup' %}">Register</a>
+                        <a href="{% url 'companyapp:companysignup' %}">Register</a>
                     </p>
                 </div>
 
@@ -53,4 +50,4 @@
     </div>
 </div>
 
-{% endblock %}  
+{% endblock %}

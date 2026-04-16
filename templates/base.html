@@ -154,11 +154,11 @@
 
       <!-- Right side -->
       <div>
-        <a href="{% url 'companylogin' %}" class="nav-link-custom {% if request.path == '/companylogin/' %}nav-link-active{% endif %}">
+        <a href="{% url 'companyapp:companylogin' %}" class="nav-link-custom {% if request.path == '/companylogin/' %}nav-link-active{% endif %}">
                 <i class="fas fa-user-plus"></i>
                 Company Login
             </a>
-            <a href="{% url 'freelancerlogin' %}" class="nav-link-custom {% if request.path == '/freelancerlogin/' %}nav-link-active{% endif %}">   
+            <a href="{% url 'freelancerapp:freelancerlogin' %}" class="nav-link-custom {% if request.path == '/freelancerlogin/' %}nav-link-active{% endif %}">   
                 <i class="fas fa-user-plus"></i>
                 Freelancer Login
             </a> 

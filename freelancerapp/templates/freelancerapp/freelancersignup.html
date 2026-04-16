@@ -20,7 +20,7 @@
                     {% endfor %}
                 {% endif %}
 
-                <form method="POST" action="{% url 'freelancersignup' %}">
+                <form method="POST" action="{% url 'freelancerapp:freelancersignup' %}">
                     {% csrf_token %}
 
                     <div class="mb-3">
@@ -81,7 +81,7 @@
 
                 <div class="text-center mt-3">
                     <p>Already have an account? 
-                        <a href="{% url 'freelancerlogin' %}">Login</a>
+                        <a href="{% url 'freelancerapp:freelancerlogin' %}">Login</a>
                     </p>
                 </div>
 
