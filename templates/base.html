@@ -132,7 +132,7 @@
 
     <!-- Navbar content -->
     <div class="collapse navbar-collapse" id="navbarContent">
-
+ 
       <!-- Left menu -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -142,7 +142,7 @@
           <a class="nav-link" href="#">Offer My Services</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'companyapp:postproject' %}">Post a Project</a>
+          <a class="nav-link" href="{% url 'companyapp:companylogin' %}">Post a Project</a>
         </li>
       </ul>
 
@@ -163,7 +163,6 @@
                 Freelancer Login
             </a> 
       </div>
-
     </div>
   </div>
 </nav>
@@ -269,11 +268,11 @@
             <div class="col-6 col-lg-2">
                 <h6 class="footer-title">Quick Links</h6>
                 <a href="#" class="footer-link">Home</a>
-                <a href="#" class="footer-link">About Us</a>
+                <a href="{% url 'about' %}" class="footer-link">About Us</a>
                 <a href="#" class="footer-link">Freelancer Signup</a>
                 <a href="#" class="footer-link">Add Project</a>
-                <a href="#" class="footer-link">Contact Us</a>
-                <a href="#" class="footer-link">Site Map</a>
+                <a href="{% url 'enquiry' %}" class="footer-link">Contact Us</a>
+                <a href="{% url 'sitemap' %}" class="footer-link">Site Map</a>
             </div>
 
             <!-- FAQ -->

@@ -19,7 +19,7 @@
                 {% endif %}
 
                 <!-- Login Form -->
-                <form method="POST">
+               <form method="POST" action="{% url 'companyapp:companylogin' %}">
                     {% csrf_token %}
 
                     <div class="mb-3">

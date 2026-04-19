@@ -7,6 +7,7 @@ from skilllinkapp.models import company
 from django.shortcuts import render, redirect
 from skilllinkapp.models import project
 
+from .forms import CompanyProfileForm
 
 
 def companypanel(request):
@@ -17,7 +18,7 @@ def companypanel(request):
 
     comp = company.objects.get(id=company_id)
 
-    return render(request, 'companyapp/companypanel.html', {'company': comp})
+    return render(request, 'company/companypanel.html', {'company': comp})
 # Create your views here.
 
 
@@ -55,31 +56,32 @@ def companysignup(request):
         messages.success(request, "Account created successfully")
         #return redirect('companylogin')
 
-    return render(request, 'companyapp/companysignup.html')
+    return render(request, 'company/companysignup.html')
 
 
 
 def companyloginview(request):
+    next_url = request.GET.get('next') or request.POST.get('next')
+
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        try:
-            comp = company.objects.get(email=email, password=password)
+        comp = company.objects.filter(email=email).first()
 
-            # login success → create session
+        if comp and comp.password == password:
             request.session['company_id'] = comp.id
             request.session['company_name'] = comp.companyname
-        
+
+            if next_url:
+                return redirect(next_url)
+
             return redirect('companyapp:companypanel')
 
-        except company.DoesNotExist:
-            messages.error(request, "Invalid email or password")
-            return render(request, 'companyapp/companylogin.html')
+        else:
+            messages.error(request, "Invalid credentials")
 
-    return render(request, 'companyapp/companylogin.html')
-
-from .forms import CompanyProfileForm
+    return render(request, 'company/companylogin.html')
 
 def manage_profile(request):
     company_id = request.session.get('company_id')
@@ -97,34 +99,52 @@ def manage_profile(request):
     else:
         form = CompanyProfileForm(instance=comp)
 
-    return render(request, 'companyapp/managecompany.html', {'form': form})
+    return render(request, 'company/managecompany.html', {'form': form})
 
 
 
 
 def postproject(request):
 
-    # 🚨 login check
-    if 'company_id' not in request.session:
-        return redirect('companylogin')
+    print("SESSION:", request.session.get('company_id'))
 
     company_id = request.session.get('company_id')
-    company_obj = company.objects.get(id=company_id)
 
+    # 🔴 Not logged in → redirect to login
+    if not company_id:
+        return redirect('/company/login/?next=/company/postproject/')
+
+    # 🔴 Safe fetch
+    try:
+        company_obj = company.objects.get(id=int(company_id))
+    except (ValueError, company.DoesNotExist):
+        return redirect('/company/login/?next=/company/postproject/')
+
+    # 🔴 Handle form
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        pid = request.POST.get('id')
+
+        data = {
+            'title': request.POST.get('title'),
+            'description': request.POST.get('description'),
+            'requiredskills': request.POST.get('requiredskills'),
+            'budget': request.POST.get('budget'),
+            'duration': request.POST.get('duration'),
+        }
+
+        if action == 'add':
+            project.objects.create(companyname=company_obj, **data)
+
+        elif action == 'update' and pid:
+            project.objects.filter(id=pid, companyname=company_obj).update(**data)
+
+        elif action == 'delete' and pid:
+            project.objects.filter(id=pid, companyname=company_obj).delete()
+
+        return redirect('companyapp:postproject')
+
+    # 🔴 Fetch projects
     projects = project.objects.filter(companyname=company_obj)
 
-    if request.method == 'POST':
-        project.objects.create(
-            companyname=company_obj,
-            title=request.POST.get('title'),
-            description=request.POST.get('description'),
-            requiredskills=request.POST.get('requiredskills'),
-            budget=request.POST.get('budget'),
-            duration=request.POST.get('duration')
-        )
-
-        return redirect('postproject')
-
     return render(request, 'company/postproject.html', {'projects': projects})
-
-

@@ -15,11 +15,14 @@ from django.contrib.auth.hashers import make_password
 def base(request):
     return render(request, 'base.html')
 
-def home(request):
-    return render(request, 'home.html')
+def enquiry(request):
+    return render(request, 'enquiry.html')
 
 def about(request):
     return render(request, 'about.html')
+
+def sitemap(request):
+    return render(request, 'sitemap.html')
 
 
 

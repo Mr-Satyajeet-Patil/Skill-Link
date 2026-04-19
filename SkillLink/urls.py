@@ -20,10 +20,10 @@ from skilllinkapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.base, name='base'),
-     path('', views.home, name='home'),
-     path('about/', views.about, name='about'),
-    path('enquiry/', views.enquiry, name='enquiry'),
      
+    path('about/', views.about, name='about'),
+    path('enquiry/', views.enquiry, name='enquiry'),
+    path('sitemap/', views.sitemap, name='sitemap'), 
     path('joinnow/', views.joinnow, name='joinnow'),
     path('company/', include('companyapp.urls')),
     path('freelancer/', include('freelancerapp.urls')),
