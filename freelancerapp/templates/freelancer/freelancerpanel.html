@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Freelancer Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .hero-img {
+    max-height: 320px;
+    object-fit: cover;
+}
+
+/* Mobile spacing fix */
+@media (max-width: 768px) {
+    .hero-img {
+        max-height: 250px;
+    }
+}
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f4f6f9;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            height: 100vh;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            width: 230px;
+        }
+
+        .sidebar h4 {
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 230px;
+            padding: 20px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+         background: #0f172a;
+         padding: 12px 25px;
+         
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+    
+         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        
+        }
+
+        .topbar h5 {
+    margin: 0;
+    font-weight: 600;
+    color: #f3f5f9;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.topbar-right span {
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.topbar-right i {
+    font-size: 22px;
+    color: #3b82f6;
+    cursor: pointer;
+}
+
+.topbar-right i:hover {
+    color: #6366f1;
+    transform: scale(1.1);
+    transition: 0.2s;
+}
+
+        /* CARDS */
+        .card-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .card-box:hover {
+            transform: translateY(-5px);
+        }
+
+        /* TABLE */
+        .table-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        /* BUTTON */
+        .btn-gradient {
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            color: white;
+            border: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+
+    <!-- LEFT -->
+    <h5>Dashboard</h5>
+
+    <!-- RIGHT -->
+    <div class="topbar-right">
+        <span>{{ freelancer.name }}</span>
+        <i class="fas fa-user-circle"></i>
+    </div>
+
+</div>
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h4>Skill<span style="color:#3b82f6;">Link</span></h4>
+
+    <a href="{% url 'freelancerapp:freelancerpanel'%}"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="{% url 'freelancerapp:managefreelancer' %}"><i class="fas fa-user"></i> Manage Profile</a>
+    <a href="{% url 'freelancerapp:findproject' %}"><i class="fas fa-plus"></i> Find Project</a>
+    <a href="#"><i class="fas fa-file-alt"></i> Bid Details</a>
+    <a href="#"><i class="fas fa-tasks"></i> Projects</a>
+    <a href="#"><i class="fas fa-star"></i> Feedback</a>
+    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
+<div class="main">
+
+{% block contentfreelancer %}
+<!-- Hero Section -->
+
+<section class="container my-5">
+
+    <div class="row align-items-center">
+        
+        <!-- IMAGE -->
+        <div class="col-lg-6 mb-4 mb-lg-0 text-center">
+            <img src="{% static 'images/freelancerpanel.jpg' %}" 
+                 class="img-fluid rounded shadow-sm hero-img" 
+                 alt="team">
+        </div>
+
+        <!-- TEXT -->
+        <div class="col-lg-6 text-center text-lg-start">
+
+            <h2 class="fw-bold">
+               Your <span class="text-primary">skills</span> <br> Your <span class="text-primary">schedule</span>. <br> Your <span class="text-primary">next opportunity</span>. 
+            </h2>
+
+            <h2 class="fw-bold">
+              Get <span class="text-warning"> hired </span> by <span class="text-warning"> top companies </span> <br>
+                <span class="text-muted fs-6">— all in one place</span>
+            </h2>
+
+            <!-- BUTTONS -->
+            <div class="mt-4 d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+
+                <button class="btn btn-outline-secondary px-4 rounded-pill">
+                   <a href="{% url 'freelancerapp:findproject' %}" class="text-decoration-none text-dark">
+                     Find Projects
+                   </a>
+                </button>
+
+                <button class="btn btn-warning px-4 rounded-pill text-white">
+                    Bid on Projects
+                </button>
+
+            </div>
+
+            <!-- DESCRIPTION -->
+            <p class="mt-4 text-muted small">
+                 Browse projects that match your expertise | Build your portfolio and grow your freelance career.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %} 
+
+</body>
+</html>

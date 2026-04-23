@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Freelancer Signup{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+
+        <div class="col-md-5">
+            <div class="card shadow-lg p-4">
+
+                <h3 class="text-center mb-4">Create Account</h3>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST" action="{% url 'freelancerapp:freelancersignup' %}">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label>Name</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password" name="password1" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Confirm Password</label>
+                        <input type="password" name="password2" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Mobile Number</label>
+                        <input type="text" name="mobile" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Select Category</label>
+                        <select name="category" class="form-select" required>
+                            <option value="">-- Select Category --</option>
+                            <option value="Graphic Design">Graphic Design</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Content Writing">Content Writing</option>
+                            <option value="Digital Marketing">Digital Marketing</option>
+                            <option value="Video Editing">Video Editing</option>
+                            <option value="Mobile App Development">Mobile App Development</option>
+                            <option value="Data Analysis">Data Analysis</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label>Skills</label>
+                        <input type="text" name="skills" class="form-control" placeholder="e.g. Graphic Design, Web Development..." required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Education</label>
+                        <textarea name="education" class="form-control" rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100">
+                        Register
+                    </button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <p>Already have an account? 
+                        <a href="{% url 'freelancerapp:freelancerlogin' %}">Login</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

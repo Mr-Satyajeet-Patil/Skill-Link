@@ -16,7 +16,7 @@ class freelancer(models.Model):
     email= models.EmailField()
     password = models.CharField(max_length=100)
     skills= models.CharField(max_length=200)
-    contact = models.CharField(max_length=20)
+    mobile = models.CharField(max_length=20)
     category = models.CharField(max_length=100)
     rating = models.FloatField(default=0.0)
     count= models.IntegerField(default=0)

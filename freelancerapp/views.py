@@ -1,10 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from skilllinkapp.models import freelancer
+from freelancerapp.forms import FreelancerProfileForm
 from skilllinkapp.models import freelancer
 
+
 # Create your views here.
+def freelancerpanel(request):
+    freelancer_id = request.session.get('freelancer_id')
+
+    if not freelancer_id:
+        return redirect('freelancerlogin')
+
+    frln = freelancer.objects.get(id=freelancer_id)
+
+    return render(request, 'freelancer/freelancerpanel.html', {'freelancer': frln})
+
 
 def freelancerlogin(request):
     if request.method == 'POST':
@@ -22,9 +33,9 @@ def freelancerlogin(request):
 
         except freelancer.DoesNotExist:
             messages.error(request, "Invalid email or password")
-            return render(request, 'freelancerapp/freelancerlogin.html')
+            return render(request, 'freelancer/freelancerlogin.html')
 
-    return render(request, 'freelancerapp/freelancerlogin.html')
+    return render(request, 'freelancer/freelancerlogin.html')
 
 def freelancersignup(request):
      if request.method == 'POST':
@@ -32,7 +43,7 @@ def freelancersignup(request):
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        contact = request.POST.get('mobile')
+        mobile = request.POST.get('mobile')
         category = request.POST.get('category')
         skills = request.POST.get('skills')
 
@@ -54,7 +65,7 @@ def freelancersignup(request):
             email=email,
             password=(password1), # In production, use make_password(password1) to hash the password
             skills=skills,
-            contact=contact,
+            mobile=mobile,
             education=education,
             category=category
         )
@@ -63,5 +74,46 @@ def freelancersignup(request):
         messages.success(request, "Account created successfully")
         #return redirect('companylogin')
 
-     return render(request, 'freelancerapp/freelancersignup.html')
+     return render(request, 'freelancer/freelancersignup.html')
  
+def manage_profile(request):
+    freelancer_id = request.session.get('freelancer_id')
+
+    if not freelancer_id:
+        return redirect('freelancerapp:freelancerlogin')
+
+    frln = freelancer.objects.get(id=freelancer_id)
+
+    if request.method == 'POST':
+        form = FreelancerProfileForm(request.POST, instance=frln)
+        if form.is_valid():
+            form.save()
+            return redirect('freelancerapp:freelancerpanel')
+    else:
+        form = FreelancerProfileForm(instance=frln)
+
+    return render(request, 'freelancer/managefreelancer.html', {'form': form})
+
+
+from skilllinkapp.models import project  # add this import at top
+
+def find_project(request):
+    freelancer_id = request.session.get('freelancer_id')
+
+    if not freelancer_id:
+        return redirect('freelancerapp:freelancerlogin')
+
+    # Get search/filter inputs
+    search = request.GET.get('search', '')
+    category = request.GET.get('category', '')
+
+    projects = project.objects.all()
+
+    if search:
+        projects = projects.filter(title__icontains=search) | projects.filter(requiredskills__icontains=search)
+
+    if category:
+        projects = projects.filter(title__icontains=category)
+
+    return render(request, 'freelancer/findproject.html', {'projects': projects, 'search': search})
+

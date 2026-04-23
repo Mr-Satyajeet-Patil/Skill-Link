@@ -1,0 +1,236 @@
+{% extends "freelancer/freelancerpanel.html" %}
+
+{% block contentfreelancer %}
+<br><br><br>
+
+<style>
+  .fp-wrapper {
+    max-width: 900px;
+    margin: auto;
+    padding: 30px 20px;
+    color: white;
+  }
+
+  .fp-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .fp-header h2 {
+    font-size: 2rem;
+    color: #60a5fa;
+    margin-bottom: 6px;
+  }
+
+  .fp-header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+  }
+
+  /* Search Bar */
+  .fp-search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .fp-search-bar input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #1e293b;
+    color: white;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border 0.2s;
+  }
+
+  .fp-search-bar input:focus {
+    border-color: #3b82f6;
+  }
+
+  .fp-search-bar button {
+    padding: 12px 22px;
+    background: #3b82f6;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .fp-search-bar button:hover {
+    background: #2563eb;
+  }
+
+  /* Project Cards */
+  .fp-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .fp-card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 22px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .fp-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+  }
+
+  .fp-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .fp-card h3 {
+    font-size: 1.15rem;
+    color: #e2e8f0;
+    margin: 0;
+  }
+
+  .fp-card-company {
+    font-size: 0.82rem;
+    color: #60a5fa;
+    background: #1e3a5f;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .fp-card-desc {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .fp-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.82rem;
+  }
+
+  .fp-tag {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .fp-tag.budget {
+    border-color: #16a34a;
+    color: #4ade80;
+    background: #052e16;
+  }
+
+  .fp-tag.duration {
+    border-color: #b45309;
+    color: #fbbf24;
+    background: #1c1400;
+  }
+
+  .fp-bid-btn {
+    margin-top: 16px;
+    display: inline-block;
+    padding: 9px 22px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .fp-bid-btn:hover {
+    background: #2563eb;
+    color: white;
+  }
+
+  /* Empty State */
+  .fp-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #475569;
+  }
+
+  .fp-empty .fp-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+  }
+
+  .fp-empty p {
+    font-size: 1rem;
+  }
+</style>
+
+<div class="fp-wrapper">
+
+  <!-- Header -->
+  <div class="fp-header">
+    <h2>🔍 Find Projects</h2>
+    <p>Browse projects posted by companies and place your bid</p>
+  </div>
+
+  <!-- Search -->
+  <form method="GET" action="">
+    <div class="fp-search-bar">
+      <input
+        type="text"
+        name="search"
+        placeholder="Search by title or skills (e.g. Flutter, Python...)"
+        value="{{ search }}"
+      />
+      <button type="submit">Search</button>
+    </div>
+  </form>
+
+  <!-- Project Cards -->
+  <div class="fp-cards">
+    {% if projects %}
+      {% for proj in projects %}
+      <div class="fp-card">
+        <div class="fp-card-top">
+          <h3>{{ proj.title }}</h3>
+          <span class="fp-card-company">🏢 {{ proj.companyname }}</span>
+        </div>
+
+        <p class="fp-card-desc">{{ proj.description }}</p>
+
+        <div class="fp-card-meta">
+          <span class="fp-tag">🛠 {{ proj.requiredskills }}</span>
+          <span class="fp-tag budget">💰 ₹{{ proj.budget }}</span>
+          <span class="fp-tag duration">⏱ {{ proj.duration }}</span>
+        </div>
+
+        <!-- Bid button — wire to your bid view later -->
+        <a href="#" class="fp-bid-btn">Place Bid</a>
+      </div>
+      {% endfor %}
+
+    {% else %}
+      <div class="fp-empty">
+        <div class="fp-empty-icon">📭</div>
+        <p>No projects found{% if search %} for "<strong>{{ search }}</strong>"{% endif %}.</p>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}
