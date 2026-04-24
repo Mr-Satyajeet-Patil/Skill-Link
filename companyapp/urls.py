@@ -12,6 +12,7 @@ urlpatterns = [
         path('companypanel/', views.companypanel, name='companypanel'),
         path('managecompany/', views.manage_profile, name= 'managecompany'),
         path('postproject/', views.postproject, name='postproject'),
+        
 ]
 
 

@@ -54,6 +54,7 @@ class bid(models.Model):
     freelancername = models.ForeignKey(freelancer, on_delete=models.CASCADE)
     bidamount = models.FloatField()
     duration= models.CharField(max_length=100)
+    proposal= models.TextField(default="")
     biddate= models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -134,7 +135,7 @@ class notification(models.Model):
         return self.freelancername.name + " - " + self.projectname.title + " - " + self.companyname.companyname
     
 class paymentfreelancer(models.Model):
-    freelancername = models.ForeignKey(freelancer, on_delete=models.CASCADE) ##
+    freelancername = models.ForeignKey(freelancer, on_delete=models.CASCADE)
     upi_id = models.CharField(max_length=100)
     bankname = models.CharField(max_length=100)
     accountnumber = models.CharField(max_length=20)

@@ -219,7 +219,7 @@
         </div>
 
         <!-- Bid button — wire to your bid view later -->
-        <a href="#" class="fp-bid-btn">Place Bid</a>
+        <a href="{% url 'freelancerapp:placebid' proj.id %}" class="fp-bid-btn">Place Bid</a>
       </div>
       {% endfor %}
 

@@ -99,7 +99,7 @@ def manage_profile(request):
     else:
         form = CompanyProfileForm(instance=comp)
 
-    return render(request, 'company/managecompany.html', {'form': form})
+    return render(request, 'company/managecompany.html', {'form': form, 'company': comp})
 
 
 
@@ -147,4 +147,5 @@ def postproject(request):
     # 🔴 Fetch projects
     projects = project.objects.filter(companyname=company_obj)
 
-    return render(request, 'company/postproject.html', {'projects': projects})
+    return render(request, 'company/postproject.html', {'projects': projects, 'company': company_obj})
+
