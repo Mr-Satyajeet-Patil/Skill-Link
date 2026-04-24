@@ -67,16 +67,20 @@
 
         /* TOPBAR */
         .topbar {
-         background: #0f172a;
-         padding: 12px 25px;
-         
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
-    
-         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        
-        }
+    background: #0f172a;
+    padding: 12px 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+    position: sticky;  
+    top: 0;
+
+    z-index: 1000;     
+}
 
         .topbar h5 {
     margin: 0;
