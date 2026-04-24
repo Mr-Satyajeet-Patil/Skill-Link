@@ -14,7 +14,7 @@ def companypanel(request):
     company_id = request.session.get('company_id')
 
     if not company_id:
-        return redirect('companylogin')
+        return redirect('companyapp:companylogin')
 
     comp = company.objects.get(id=company_id)
 
@@ -54,7 +54,7 @@ def companysignup(request):
         new_company.save()
 
         messages.success(request, "Account created successfully")
-        #return redirect('companylogin')
+        
 
     return render(request, 'company/companysignup.html')
 
@@ -99,7 +99,7 @@ def manage_profile(request):
     else:
         form = CompanyProfileForm(instance=comp)
 
-    return render(request, 'company/managecompany.html', {'form': form})
+    return render(request, 'company/managecompany.html', {'form': form , 'company': comp})
 
 
 
@@ -112,7 +112,7 @@ def postproject(request):
 
     # 🔴 Not logged in → redirect to login
     if not company_id:
-        return redirect('/company/login/?next=/company/postproject/')
+        return redirect('companyapp:companylogin')
 
     # 🔴 Safe fetch
     try:
@@ -147,4 +147,17 @@ def postproject(request):
     # 🔴 Fetch projects
     projects = project.objects.filter(companyname=company_obj)
 
-    return render(request, 'company/postproject.html', {'projects': projects})
+    return render(request, 'company/postproject.html', {'projects': projects , 'company': company_obj})
+
+def companylogout(request):
+    request.session.flush()  # clears all session data
+    return redirect('companyapp:companylogin')
+    
+def listofprojects(request):
+    projects = project.objects.all()
+    search = request.GET.get('search', '')
+    if search:
+        projects = projects.filter(title__icontains=search) | \
+                   projects.filter(requiredskills__icontains=search)
+    return render(request, 'company/listofprojects.html', {'projects': projects, 'search': search})
+    return redirect('companyapp:companylogin')

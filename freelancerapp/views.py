@@ -10,7 +10,7 @@ def freelancerpanel(request):
     freelancer_id = request.session.get('freelancer_id')
 
     if not freelancer_id:
-        return redirect('freelancerlogin')
+        return redirect('freelancerapp:freelancerlogin')
 
     frln = freelancer.objects.get(id=freelancer_id)
 
@@ -92,7 +92,7 @@ def manage_profile(request):
     else:
         form = FreelancerProfileForm(instance=frln)
 
-    return render(request, 'freelancer/managefreelancer.html', {'form': form})
+    return render(request, 'freelancer/managefreelancer.html', {'form': form, 'freelancer': frln})
 
 
 from skilllinkapp.models import project  # add this import at top
@@ -102,7 +102,7 @@ def find_project(request):
 
     if not freelancer_id:
         return redirect('freelancerapp:freelancerlogin')
-
+    frln = freelancer.objects.get(id=freelancer_id)
     # Get search/filter inputs
     search = request.GET.get('search', '')
     category = request.GET.get('category', '')
@@ -115,5 +115,11 @@ def find_project(request):
     if category:
         projects = projects.filter(title__icontains=category)
 
-    return render(request, 'freelancer/findproject.html', {'projects': projects, 'search': search})
+    return render(request, 'freelancer/findproject.html', {'projects': projects, 'search': search, 'freelancer': frln})
+
+#freelancer logout view
+def freelancerlogout(request):
+      request.session.flush()  # clears all session data
+      return redirect('freelancerapp:freelancerlogin')
+
 

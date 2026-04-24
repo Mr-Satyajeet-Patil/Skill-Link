@@ -11,4 +11,5 @@ urlpatterns = [
      path('freelancerpanel/', views.freelancerpanel, name='freelancerpanel'),
       path('managefreelancer/', views.manage_profile, name= 'managefreelancer'),
       path('findproject/', views.find_project, name='findproject'),
+      path('freelancerlogout/', views.freelancerlogout, name='freelancerlogout'),
 ]
