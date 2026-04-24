@@ -123,3 +123,43 @@ def freelancerlogout(request):
       return redirect('freelancerapp:freelancerlogin')
 
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
+from skilllinkapp.models import project, bid, freelancer
+
+def place_bid(request, project_id):
+    project_obj = get_object_or_404(project, id=project_id)
+
+    freelancer_id = request.session.get('freelancer_id')
+    if not freelancer_id:
+        return redirect('freelancerapp:login')
+
+    freelancer_obj = freelancer.objects.get(id=freelancer_id)
+
+    if request.method == 'POST':
+        bidamount = request.POST.get('bidamount')
+        duration = request.POST.get('duration')
+        proposal = request.POST.get('proposal')
+
+       
+        if float(bidamount) > project_obj.budget:
+            from django.contrib import messages
+            messages.error(request, "Bid exceeds project budget")
+            return redirect('freelancerapp:placebid', project_id=project_id)
+
+       
+        bid.objects.create(
+            projectname=project_obj,
+            freelancername=freelancer_obj,
+            bidamount=bidamount,
+            duration=duration,
+            proposal=proposal
+        )
+
+        return redirect('freelancerapp:freelancerpanel')
+
+    
+    return render(request, 'freelancer/placebid.html', {
+        'project': project_obj,
+        'freelancer': freelancer_obj
+    })

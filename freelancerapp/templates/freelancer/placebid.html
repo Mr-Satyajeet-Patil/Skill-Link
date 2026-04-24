@@ -1,0 +1,52 @@
+{% extends "freelancer/freelancerpanel.html" %}
+
+{% block contentfreelancer %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4" style="max-width:650px;margin:auto;">
+        
+        <h3 class="text-center mb-4">Place Your Bid</h3>
+
+        <!-- Project Info -->
+        <div class="mb-4 p-3 bg-light rounded">
+            <h5>{{ project.title }}</h5>
+            <p>{{ project.description }}</p>
+            <p><strong>Budget:</strong> ₹{{ project.budget }}</p>
+            <p><strong>Required Skills:</strong> {{ project.requiredskills }}</p>
+            <p><strong>Duration Required:</strong> {{ project.duration }}</p>
+            <p><strong>Posted At:</strong> {{ project.postedat }}</p>
+            <p><strong>Posted By:</strong> {{ project.companyname }}</p>
+        </div>
+
+        <!-- Bid Form -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label>Bid Amount (₹)</label>
+                <input type="number" name="bidamount" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Delivery Duration</label>
+                <input type="text" name="duration" class="form-control" placeholder="e.g. 5 days" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Proposal</label>
+                <textarea name="proposal" class="form-control" rows="4" 
+                placeholder="Explain why you are best for this project..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Submit Bid
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
