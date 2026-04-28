@@ -159,5 +159,135 @@ def listofprojects(request):
     if search:
         projects = projects.filter(title__icontains=search) | \
                    projects.filter(requiredskills__icontains=search)
+   
     return render(request, 'company/listofprojects.html', {'projects': projects, 'search': search})
-    return redirect('companyapp:companylogin')
+   
+
+from skilllinkapp.models import bid, freelancer, project
+
+def bid_details(request):
+    company_id = request.session.get('company_id')
+    if not company_id:
+        return redirect('companyapp:companylogin')
+
+    from skilllinkapp.models import company as Company
+    comp = Company.objects.get(id=company_id)
+
+    # get all projects of this company
+    projects = project.objects.filter(companyname=comp)
+
+    # get bids only for this company's projects
+    bids = bid.objects.filter(projectname__in=projects)
+
+    return render(request, 'company/biddetails.html', {
+        'bids': bids,
+        'projects': projects,
+        'company': comp
+    })
+
+
+def freelancer_profile(request, freelancer_id):
+    company_id = request.session.get('company_id')
+    if not company_id:
+        return redirect('companyapp:companylogin')
+
+    frln = freelancer.objects.get(id=freelancer_id)
+    return render(request, 'company/freelancerprofile.html', {'freelancer': frln})
+
+
+from skilllinkapp.models import bid, freelancer, project, allotment, notification
+
+def select_freelancer(request, bid_id):
+    company_id = request.session.get('company_id')
+    if not company_id:
+        return redirect('companyapp:companylogin')
+
+    comp = company.objects.get(id=company_id)
+    selected_bid = bid.objects.get(id=bid_id)
+
+    # mark bid as selected
+    selected_bid.is_selected = True
+    selected_bid.save()
+
+    # create allotment record
+    allotment.objects.create(
+        projectname=selected_bid.projectname,
+        freelancername=selected_bid.freelancername,
+        companyname=comp,
+        status='Allocated'
+    )
+
+    # create notification for freelancer
+    notification.objects.create(
+        freelancername=selected_bid.freelancername,
+        companyname=comp,
+        projectname=selected_bid.projectname,
+        message=f"Congratulations! You have been selected for the project '{selected_bid.projectname.title}'."
+    )
+
+    messages.success(request, f"{selected_bid.freelancername.name} selected successfully!")
+    return redirect('companyapp:biddetails')
+
+
+def unselect_freelancer(request, bid_id):
+    company_id = request.session.get('company_id')
+    if not company_id:
+        return redirect('companyapp:companylogin')
+
+    selected_bid = bid.objects.get(id=bid_id)
+
+    # mark bid as unselected
+    selected_bid.is_selected = False
+    selected_bid.save()
+
+    # delete allotment record
+    allotment.objects.filter(
+        projectname=selected_bid.projectname,
+        freelancername=selected_bid.freelancername
+    ).delete()
+
+    messages.success(request, f"{selected_bid.freelancername.name} unselected successfully!")
+    return redirect('companyapp:biddetails')
+
+
+def project_status(request):
+    company_id = request.session.get('company_id')
+    if not company_id:
+        return redirect('companyapp:companylogin')
+
+    comp = company.objects.get(id=company_id)
+    projects = project.objects.filter(companyname=comp)
+
+    project_status_list = []
+    allocated_count = 0
+    pending_count = 0
+    nobids_count = 0
+
+    for proj in projects:
+        allotment_obj = allotment.objects.filter(
+            projectname=proj,
+            companyname=comp
+        ).first()
+        total_bids = bid.objects.filter(projectname=proj).count()
+
+        # count for summary
+        if allotment_obj:
+            allocated_count += 1
+        elif total_bids > 0:
+            pending_count += 1
+        else:
+            nobids_count += 1
+
+        project_status_list.append({
+            'project': proj,
+            'allotment': allotment_obj,
+            'total_bids': total_bids,
+        })
+
+    return render(request, 'company/projectstatus.html', {
+        'project_status_list': project_status_list,
+        'company': comp,
+        'allocated_count': allocated_count,   # ← pass counts
+        'pending_count': pending_count,
+        'nobids_count': nobids_count,
+    })
