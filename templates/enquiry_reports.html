@@ -1,0 +1,23 @@
+<html>
+    <body>
+        <h1>Enquiry Reports</h1>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Date Submitted</th>
+            </tr>
+            {% for enquiry in enquiry %}
+            <tr>
+                <td>{{ enquiry.id }}</td>
+                <td>{{ enquiry.name }}</td>
+                <td>{{ enquiry.email }}</td>
+                <td>{{ enquiry.message }}</td>
+                <td>{{ enquiry.date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

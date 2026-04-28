@@ -132,10 +132,10 @@
       <!-- Left menu -->
       <ul class="navbar-nav me-auto mb-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">List of Projects</a>
-        </li>
+          <a class="nav-link" href="{% url 'companyapp:listofprojects' %}">List of Projects</a>
+                </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Offer My Services</a>
+          <a class="nav-link" href="{% url 'freelancerapp:freelancerlogin' %}">Offer My Services</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'companyapp:companylogin' %}">Post a Project</a>
@@ -236,7 +236,7 @@
 
             <!-- Brand Section -->
             <div class="col-lg-4" >
-                <h4 class="fw-bold text-white mb-3">SkillLink</h4>
+                <span class="brand-text">Skill<span class="accent">-Link</span></span>
                 <p  class="text-white small" >
                     Connecting companies, entrepreneurs, and freelancers with zero commission.
                     Build, collaborate, and grow faster with trusted professionals.
@@ -255,8 +255,8 @@
                 <h6 class="footer-title">Quick Links</h6>
                 <a href="#" class="footer-link">Home</a>
                 <a href="{% url 'about' %}" class="footer-link">About Us</a>
-                <a href="#" class="footer-link">Freelancer Signup</a>
-                <a href="#" class="footer-link">Add Project</a>
+                <a href="{% url 'freelancerapp:freelancersignup' %}" class="footer-link">Freelancer Signup</a>
+                
                 <a href="{% url 'enquiry' %}" class="footer-link">Contact Us</a>
                 <a href="{% url 'sitemap' %}" class="footer-link">Site Map</a>
             </div>
@@ -294,7 +294,7 @@
                 © 2026 SkillLink. All rights reserved.
             </div>
             <div style="color: white">
-                Made with ❤️ by Your Team
+                Made With ❤️ By Our Team
             </div>
         </div>
     </div>

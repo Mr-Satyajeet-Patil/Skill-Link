@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User 
 from django.contrib import messages
-from .models import enquiry as Enquiry
+from .models import enquiry as Enquiry, project
 
 
 from urllib import request
@@ -54,3 +54,4 @@ def enquiry(request):
 
 def joinnow(request):
     return render(request, 'joinnow.html')
+

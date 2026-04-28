@@ -165,7 +165,13 @@
     <a href="#"><i class="fas fa-file-alt"></i> Bid Details</a>
     <a href="#"><i class="fas fa-tasks"></i> Projects</a>
     <a href="#"><i class="fas fa-star"></i> Feedback</a>
-    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="{% url 'companyapp:companylogout' %}" 
+   style="display:flex;align-items:center;gap:8px;color:#f87171;text-decoration:none;padding:8px 12px;border-radius:8px;transition:background 0.2s;"
+   onmouseover="this.style.background='rgba(248,113,113,0.1)'" 
+   onmouseout="this.style.background='transparent'">
+   <i class="fas fa-right-from-bracket"></i> Logout
+</a>
+    
 </div>
 <div class="main">
 
@@ -205,7 +211,7 @@
                 </button>
 
                 <button class="btn btn-warning px-4 rounded-pill text-white">
-                    Bid on Projects
+                   Bid on Projects
                 </button>
 
             </div>

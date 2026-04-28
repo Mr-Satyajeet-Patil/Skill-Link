@@ -10,7 +10,7 @@ def freelancerpanel(request):
     freelancer_id = request.session.get('freelancer_id')
 
     if not freelancer_id:
-        return redirect('freelancerlogin')
+        return redirect('freelancerapp:freelancerlogin')
 
     frln = freelancer.objects.get(id=freelancer_id)
 
@@ -102,9 +102,7 @@ def find_project(request):
 
     if not freelancer_id:
         return redirect('freelancerapp:freelancerlogin')
-    
-    frln= freelancer.objects.get(id=freelancer_id)
-
+    frln = freelancer.objects.get(id=freelancer_id)
     # Get search/filter inputs
     search = request.GET.get('search', '')
     category = request.GET.get('category', '')
@@ -118,6 +116,12 @@ def find_project(request):
         projects = projects.filter(title__icontains=category)
 
     return render(request, 'freelancer/findproject.html', {'projects': projects, 'search': search, 'freelancer': frln})
+
+#freelancer logout view
+def freelancerlogout(request):
+      request.session.flush()  # clears all session data
+      return redirect('freelancerapp:freelancerlogin')
+
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import render, redirect, get_object_or_404
