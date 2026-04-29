@@ -162,10 +162,10 @@
     <a href="{% url 'freelancerapp:freelancerpanel'%}"><i class="fas fa-home"></i> Dashboard</a>
     <a href="{% url 'freelancerapp:managefreelancer' %}"><i class="fas fa-user"></i> Manage Profile</a>
     <a href="{% url 'freelancerapp:findproject' %}"><i class="fas fa-plus"></i> Find Project</a>
-    <a href="#"><i class="fas fa-file-alt"></i> Bid Details</a>
+    <a href="{% url 'freelancerapp:mybids' %}"><i class="fas fa-file-alt"></i> My Bids</a> 
     <a href="#"><i class="fas fa-tasks"></i> Projects</a>
     <a href="#"><i class="fas fa-star"></i> Feedback</a>
-    <a href="{% url 'companyapp:companylogout' %}" 
+    <a href="{% url 'freelancerapp:freelancerlogout' %}" 
    style="display:flex;align-items:center;gap:8px;color:#f87171;text-decoration:none;padding:8px 12px;border-radius:8px;transition:background 0.2s;"
    onmouseover="this.style.background='rgba(248,113,113,0.1)'" 
    onmouseout="this.style.background='transparent'">

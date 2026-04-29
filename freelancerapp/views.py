@@ -163,3 +163,45 @@ def place_bid(request, project_id):
         'project': project_obj,
         'freelancer': freelancer_obj
     })
+    
+    
+from skilllinkapp.models import bid, allotment
+
+def mybids(request):
+    freelancer_id = request.session.get('freelancer_id')
+    if not freelancer_id:
+        return redirect('freelancerapp:freelancerlogin')
+
+    frln = freelancer.objects.get(id=freelancer_id)
+    bids = bid.objects.filter(freelancername=frln)
+
+    bid_list = []
+    allocated_count = 0
+    pending_count = 0
+    rejected_count = 0
+
+    for b in bids:
+        allotment_obj = allotment.objects.filter(
+            projectname=b.projectname,
+            freelancername=frln
+        ).first()
+
+        if allotment_obj:
+            allocated_count += 1
+        elif b.projectname.is_selected:
+            rejected_count += 1
+        else:
+            pending_count += 1
+
+        bid_list.append({
+            'bid': b,
+            'allotment': allotment_obj,
+        })
+
+    return render(request, 'freelancer/mybids.html', {
+        'bid_list': bid_list,
+        'freelancer': frln,
+        'allocated_count': allocated_count,
+        'pending_count': pending_count,
+        'rejected_count': rejected_count,
+    })

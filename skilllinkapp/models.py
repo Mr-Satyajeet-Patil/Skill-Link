@@ -45,6 +45,7 @@ class project(models.Model):
     budget = models.FloatField()
     duration = models.TextField()
     postedat= models.DateTimeField(auto_now_add=True)
+    is_selected = models.BooleanField(default=False)
     
     def __str__(self):
         return self.title
@@ -56,6 +57,7 @@ class bid(models.Model):
     duration= models.CharField(max_length=100)
     proposal= models.TextField(default="")
     biddate= models.DateTimeField(auto_now_add=True)
+    is_selected = models.BooleanField(default=False) 
     
     def __str__(self):
         return self.freelancername.name + " - " + self.projectname.title
@@ -67,7 +69,7 @@ class allotment(models.Model):
     startdate= models.DateTimeField(auto_now_add=True) #
     allotdate= models.DateTimeField(auto_now_add=True) #
     status = models.CharField(max_length=100)
-    rating = models.FloatField()
+    rating = models.FloatField(default=0.0) 
     
     def __str__(self):
         return self.freelancername.name + " - " + self.projectname.title + " - " + self.companyname.companyname
